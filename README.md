@@ -16,6 +16,34 @@ A documentação completa está em [`docs/`](docs/README.md).
 | [Roadmap](docs/06-roadmap/mvp.md) | Escopo do MVP e evolução futura |
 | [Referências](docs/07-referencias/chatwoot.md) | Análise técnica do Chatwoot como referência |
 
+## Skills e pipeline de desenvolvimento
+
+As skills operacionais ficam em [`skills/`](skills/README.md).
+
+O fluxo oficial é:
+
+```text
+Produto
+   ↓
+Implementação
+   ├── Desenvolvedores
+   └── DBA
+         ↓
+      Qualidade
+         ↓
+       DevOps
+         ↓
+      Release
+         ↓
+     Operação
+         ↺
+      Produto
+```
+
+Consulte [`skills/PIPELINE.md`](skills/PIPELINE.md) para os gates, handoffs, estados e regras de rework.
+
+Para orientar agentes de IA, use [`skills/AGENT_ROUTER.md`](skills/AGENT_ROUTER.md). O checklist global está em [`skills/DEFINITION_OF_DONE.md`](skills/DEFINITION_OF_DONE.md).
+
 ## Princípio central
 
 > A IA **revisa e sugere**; o profissional **decide**.
