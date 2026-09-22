@@ -1,0 +1,54 @@
+name: Backend CI
+
+on:
+  push:
+    paths:
+      - "backend/**"
+      - ".github/workflows/backend-ci.yml"
+  pull_request:
+    paths:
+      - "backend/**"
+      - ".github/workflows/backend-ci.yml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: workchat
+          POSTGRES_USER: workchat
+          POSTGRES_PASSWORD: workchat
+        ports:
+          - 55432:5432
+        options: >-
+          --health-cmd "pg_isready -U workchat -d workchat"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      TEST_JDBC_URL: jdbc:postgresql://localhost:55432/workchat
+      TEST_DB_USER: workchat
+      TEST_DB_PASSWORD: workchat
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+      - name: Run tests
+        working-directory: backend
+        run: mvn -B clean test 2>&1 | tee maven-test.log
+      - name: Ensure Surefire executed tests
+        working-directory: backend
+        run: |
+          if grep -E 'Tests run: 0,' maven-test.log; then
+            echo "No tests were executed (Surefire false green)."
+            exit 1
+          fi
+          if ! grep -E 'Tests run: (1[0-9]|[2-9][0-9]),' maven-test.log; then
+            echo "Expected at least 10 tests for MVP-01 suite."
+            exit 1
+          fi

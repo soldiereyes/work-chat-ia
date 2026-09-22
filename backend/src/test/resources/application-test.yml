@@ -1,0 +1,11 @@
+spring:
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+  flyway:
+    locations: classpath:db/migration,classpath:db/migration-dev
+
+workchat:
+  security:
+    jwt:
+      secret: test-secret-key-with-enough-length-for-hs256-algorithm-required
