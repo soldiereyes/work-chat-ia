@@ -2,6 +2,8 @@ package com.workchatia.shared.infrastructure.web;
 
 import com.workchatia.identity.application.ForbiddenException;
 import com.workchatia.identity.application.InvalidCredentialsException;
+import com.workchatia.shared.application.DomainConflictException;
+import com.workchatia.shared.application.ResourceNotFoundException;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,5 +27,25 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     ResponseEntity<Map<String, String>> validation(MethodArgumentNotValidException ex) {
         return ResponseEntity.badRequest().body(Map.of("error", "validation_failed"));
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    ResponseEntity<Map<String, String>> notFound(ResourceNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", ex.getMessage()));
+    }
+
+    @ExceptionHandler(DomainConflictException.class)
+    ResponseEntity<Map<String, String>> conflict(DomainConflictException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("error", ex.getMessage()));
+    }
+
+    @ExceptionHandler(IllegalStateException.class)
+    ResponseEntity<Map<String, String>> illegalState(IllegalStateException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("error", ex.getMessage()));
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    ResponseEntity<Map<String, String>> illegalArgument(IllegalArgumentException ex) {
+        return ResponseEntity.badRequest().body(Map.of("error", ex.getMessage()));
     }
 }

@@ -1,7 +1,14 @@
 package com.workchatia.message.domain;
+
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
 public interface MessageRepository {
- Message save(Message message);
- Optional<Message> findById(UUID id);
+
+    Message save(Message message);
+
+    Optional<Message> findById(UUID id);
+
+    List<Message> findByConversationId(UUID conversationId);
 }
