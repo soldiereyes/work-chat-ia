@@ -79,6 +79,16 @@ classDiagram
     MessageDeliveryService --> ChannelGateway
 ```
 
+## Identity & Access (MVP-01)
+
+| Classe | Responsabilidade |
+|--------|------------------|
+| `AuthenticationService` | Login e emissão de JWT |
+| `AuthorizationService` | Verificação de `PermissionCode` |
+| `AccountScopedAccess` | Isolamento por `accountId` |
+| `IdentityProvider` / `DbIdentityProvider` | Autenticação contra PostgreSQL |
+| `JwtService` | Geração e parsing de token |
+
 ## Serviços de aplicação principais
 
 | Classe | Responsabilidade |

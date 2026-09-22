@@ -22,6 +22,7 @@
 - [Estrutura de pacotes](03-arquitetura/pacotes.md)
 - [Diagrama de classes](03-arquitetura/classes.md)
 - [Decisões arquiteturais](03-arquitetura/decisoes-arquiteturais.md)
+- [Plano de implementação do MVP](03-arquitetura/plano-implementacao-mvp.md)
 
 ### 4. Fluxos (Mermaid)
 - [Índice de fluxos](04-fluxos/README.md)
@@ -40,6 +41,11 @@
 - [Política de áudio](05-regras-negocio/politica-audio.md)
 
 ### 6. Roadmap
+- [MVP Product Contract](06-roadmap/mvp-product-contract.md)
+- [Auditoria MVP-00](06-roadmap/mvp-00-auditoria.md)
+- [Handoff Produto → Implementação (MVP-00)](06-roadmap/handoff-mvp-00-produto-implementacao.yaml)
+- [Handoff Implementação → Qualidade/Dev (MVP-01)](06-roadmap/handoff-mvp-01-implementacao-desenvolvimento.yaml)
+- [Validação Qualidade MVP-01](06-roadmap/mvp-01-validacao-qualidade.md)
 - [Escopo do MVP](06-roadmap/mvp.md)
 - [Fora do MVP (evolução)](06-roadmap/fora-do-mvp.md)
 
