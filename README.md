@@ -50,6 +50,36 @@ Para orientar agentes de IA, use [`skills/AGENT_ROUTER.md`](skills/AGENT_ROUTER.
 
 > **Review** não envia mensagem, não controla usuário e não controla conversa — apenas avalia uma mensagem e produz um `MessageReview`.
 
+## Backend (desenvolvimento local)
+
+1. Subir infraestrutura:
+
+```bash
+docker compose up -d
+```
+
+O PostgreSQL do compose expõe a porta **55432** no host (evita conflito com Postgres local na 5432).
+
+2. Rodar a API:
+
+```bash
+export DB_PORT=55432
+cd backend && mvn spring-boot:run -Dspring-boot.run.profiles=dev
+```
+
+3. Usuários de seed (perfil `dev`): `alice@workchat.test` / `secret123` (com `SEND_MESSAGE`); `viewer@workchat.test` / `secret123` (sem envio).
+
+4. Testes (exige Postgres do compose em execução):
+
+```bash
+docker compose up -d postgres
+cd backend && mvn test
+```
+
+Usa `jdbc:postgresql://localhost:55432/workchat` por padrão (`TEST_JDBC_URL` para sobrescrever). Flyway aplica `migration` + `migration-dev` (seed).
+
+Health: `GET http://localhost:8080/actuator/health`
+
 ## Stack prevista (MVP)
 
 - **Backend:** Java / Spring Boot (monólito modular)

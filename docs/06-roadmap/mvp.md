@@ -1,5 +1,7 @@
 # Escopo do MVP
 
+> Contrato consolidado de produto, rastreabilidade e aceites: [mvp-product-contract.md](mvp-product-contract.md).
+
 ## Objetivo
 
 Provar o **núcleo do produto**:

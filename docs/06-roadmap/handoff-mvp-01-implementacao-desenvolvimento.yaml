@@ -1,0 +1,74 @@
+handoff:
+  from: implementacao
+  to:
+    - desenvolvedores
+
+  card: MVP-01
+
+  objective: >
+    Identity & Access concluído (REQ-F-001). Iniciar MVP-02 Conversation
+    reutilizando AuthenticatedUser e AccountScopedAccess.
+
+  requirements:
+    - REQ-F-001
+    - REQ-NF-005
+
+  acceptance_criteria:
+    - AC-001
+    - AC-002
+    - AC-020
+
+  bounded_contexts:
+    - Identity & Access
+
+  artifacts:
+    - backend/src/main/java/com/workchatia/identity/
+    - backend/src/main/resources/db/migration/V1__identity.sql
+    - backend/src/main/resources/db/migration-dev/V2__identity_seed.sql
+    - backend/src/test/java/com/workchatia/identity/AuthenticationControllerTest.java
+    - backend/src/test/java/com/workchatia/identity/infrastructure/security/JwtServiceTest.java
+    - docs/06-roadmap/mvp-01-validacao-qualidade.md
+    - docs/03-arquitetura/plano-implementacao-mvp.md
+    - .github/workflows/backend-ci.yml
+    - docker-compose.yml
+
+  api_contracts:
+    - POST /api/v1/auth/login
+    - GET /api/v1/me
+    - GET /api/v1/users/{id}
+    - POST /api/v1/messages (probe SEND_MESSAGE; substituir em MVP-03)
+    - GET /actuator/health
+
+  database_change: true
+  migrations:
+    - V1__identity.sql (todos os ambientes)
+    - V2__identity_seed.sql (apenas dev/test via migration-dev)
+
+  tests_executed:
+    - command: mvn clean test
+      classes:
+        - com.workchatia.identity.AuthenticationControllerTest
+        - com.workchatia.identity.infrastructure.security.JwtServiceTest
+      expected_tests_run: 13
+      result: PASS
+
+  quality_report:
+    - docs/06-roadmap/mvp-01-validacao-qualidade.md
+    verdict: PASS
+
+  reconciliation_notes:
+    - Message.approve() ainda não valida ReviewResult — MVP-07/MVP-08 (Q-003)
+    - MessageReviewService / DefaultCommunicationPolicy — evoluir MVP-04+
+    - AC-020 completo com Conversation — MVP-02
+
+  risks:
+    - Probe POST /api/v1/messages temporário até MVP-03
+    - Redis autoconfig desabilitado até MVP-06
+
+  out_of_scope:
+    - Conversation, Message persistido, revisão, delivery, frontend
+
+  next_gate: >
+    MVP-02 Conversation Management (REQ-F-002, AC-003).
+
+  state: DONE

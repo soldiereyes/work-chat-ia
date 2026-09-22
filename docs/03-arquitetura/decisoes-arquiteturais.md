@@ -65,3 +65,39 @@
 **Decisão:** Evitar padrão `Current.account` implícito (como no Chatwoot) em serviços de revisão e entrega.
 
 **Motivo:** Testabilidade e clareza de contratos em Java/Spring.
+
+---
+
+## ADR-009: Autenticação local no MVP
+
+**Decisão:** Credenciais em PostgreSQL com hash BCrypt; emissão de JWT stateless; porta `IdentityProvider` com adapter `DbIdentityProvider`.
+
+**Motivo:** Keycloak e IdP externo estão fora do MVP; login deve funcionar sem infraestrutura adicional.
+
+**Detalhe:** E-mail único global para simplificar login.
+
+**Alternativa rejeitada:** Keycloak no MVP.
+
+---
+
+## ADR-010: Contexto de usuário explícito
+
+**Decisão:** `AuthenticatedUser` (userId, accountId, permissions) obtido do token e passado aos application services.
+
+**Motivo:** ADR-008; evita contexto global implícito.
+
+---
+
+## ADR-011: API versionada
+
+**Decisão:** Prefixo `/api/v1` para todos os endpoints REST do MVP.
+
+**Motivo:** Contrato estável para o frontend React.
+
+---
+
+## ADR-012: Revisão assíncrona como padrão do MVP
+
+**Decisão:** Caminho assíncrono (ADR-002) é o comportamento alvo; revisão síncrona restrita a protótipo local/`dev` se necessário.
+
+**Motivo:** Resolver conflito documental C-01 (fluxo 01 vs fluxo 05) sem alterar regra de negócio.
