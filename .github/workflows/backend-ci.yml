@@ -48,7 +48,7 @@ jobs:
             echo "No tests were executed (Surefire false green)."
             exit 1
           fi
-          if ! grep -E 'Tests run: (1[0-9]|[2-9][0-9]),' maven-test.log; then
-            echo "Expected at least 10 tests for MVP-01 suite."
+          if ! grep -E 'Tests run: (3[89]|[4-9][0-9]),' maven-test.log; then
+            echo "Expected at least 38 tests for MVP-01 + MVP-02 suite."
             exit 1
           fi
