@@ -1,0 +1,145 @@
+handoff:
+  from: produto
+  to: implementacao
+
+  card: MVP-00
+
+  objective: >
+    Consumir o MVP Product Contract e produzir desenho técnico executável
+    (bounded contexts, casos de uso técnicos, contratos API/eventos, sequências,
+    impactos de persistência e plano de fatias MVP-01+) sem redefinir regras de negócio.
+
+  requirements:
+    - REQ-F-001
+    - REQ-F-002
+    - REQ-F-003
+    - REQ-F-004
+    - REQ-F-005
+    - REQ-F-006
+    - REQ-F-007
+    - REQ-F-008
+    - REQ-F-009
+    - REQ-F-010
+    - REQ-F-011
+    - REQ-F-012
+    - REQ-NF-001
+    - REQ-NF-002
+    - REQ-NF-003
+    - REQ-NF-004
+    - REQ-NF-005
+    - REQ-NF-006
+    - REQ-NF-007
+    - REQ-NF-008
+
+  use_cases:
+    - UC-001
+    - UC-002
+    - UC-003
+    - UC-004
+    - UC-005
+    - UC-006
+    - UC-007
+    - UC-008
+    - UC-009
+    - UC-010
+
+  business_rules:
+    - BR-001
+    - BR-002
+    - BR-003
+    - BR-004
+    - BR-005
+    - BR-006
+    - BR-007
+
+  acceptance_criteria:
+    - AC-001
+    - AC-002
+    - AC-003
+    - AC-004
+    - AC-005
+    - AC-006
+    - AC-007
+    - AC-008
+    - AC-009
+    - AC-010
+    - AC-011
+    - AC-012
+    - AC-013
+    - AC-014
+    - AC-015
+    - AC-016
+    - AC-017
+    - AC-018
+    - AC-019
+    - AC-020
+
+  bounded_contexts:
+    - Identity & Access
+    - Conversation Management
+    - Message Communication
+    - Communication Review
+    - Delivery  # fronteira exata pendente PD-05
+
+  relevant_documents:
+    - docs/06-roadmap/mvp-product-contract.md
+    - docs/06-roadmap/mvp-00-auditoria.md
+    - docs/06-roadmap/mvp.md
+    - docs/06-roadmap/fora-do-mvp.md
+    - docs/02-dominio/bounded-contexts.md
+    - docs/02-dominio/entidades.md
+    - docs/02-dominio/estados.md
+    - docs/02-dominio/eventos-de-dominio.md
+    - docs/03-arquitetura/decisoes-arquiteturais.md
+    - docs/03-arquitetura/stack-mvp.md
+    - docs/04-fluxos/08-fluxo-geral-mvp.md
+    - docs/05-regras-negocio/principios-review.md
+    - docs/05-regras-negocio/communication-policy.md
+    - docs/05-regras-negocio/politica-audio.md
+    - skills/implementacao/SKILL.md
+    - skills/PIPELINE.md
+
+  architectural_questions:
+    - Como unificar fluxo síncrono (validação UX) e assíncrono (ADR-002) em um contrato de API? (PD-04)
+    - Delivery é bounded context separado ou submódulo de Message Communication? (PD-05)
+    - Ordem exata CommunicationPolicy vs AIReviewService no worker MessageCreated? (PD-06)
+    - Onde persistir ReviewResult — agregado MessageReview apenas ou DTO de aplicação? (derivar de entidades.md)
+    - Contrato de RealtimeGateway vs evento ReviewCompleted (eventos-de-dominio.md)
+    - Estratégia de mock ChannelGateway e estados SENT/DELIVERED
+
+  database_questions:
+    - Tabelas mínimas alinhadas a account, user, conversation, message, message_review, review_suggestion (skill DBA)
+    - Necessidade de outbox para MessageCreated + worker (PD-07)
+    - Constraints para impedir aprovação/envio em BLOCKED
+    - Isolamento por accountId em todas as queries críticas (REQ-NF-005)
+
+  risks:
+    - Conflito documental sync vs async (mvp-00-auditoria C-01)
+    - Código esboço em backend/ pode divergir do contrato se implementação não reconciliar
+    - Cards MVP-01..10 não publicados — risco de desalinhamento com Issue #2 (PD-09)
+    - Decisão de áudio sem revisão (PD-01)
+
+  out_of_scope:
+    - Implementação de código neste handoff
+    - Integrações reais de canal e webhooks de produção
+    - Keycloak, Kafka/RabbitMQ primário, OpenSearch
+    - UI admin de políticas e analytics
+    - Eventos MessageApproved/MessageDelivered até haver consumidores
+
+  pending_decisions:
+    - PD-01
+    - PD-02
+    - PD-03
+    - PD-04
+    - PD-05
+    - PD-06
+    - PD-07
+    - PD-08
+    - PD-09
+
+  next_gate: >
+    Implementação deve produzir o desenho técnico e contratos necessários para MVP-01
+    (Identity & Access), incluindo resolução ou escalonamento das architectural_questions
+    antes de codificar o fluxo completo de revisão.
+
+  state: PRODUCT_READY
