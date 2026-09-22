@@ -54,7 +54,12 @@ src/main/java/com/workchatia/
 │
 └── shared/
     ├── domain/
+    │   └── event/
+    │       ├── DomainEvent.java
+    │       ├── MessageCreatedEvent.java
+    │       └── OutboxRepository.java
     └── infrastructure/
+        └── JpaOutboxRepository.java
 ```
 
 ## Responsabilidade por pacote
